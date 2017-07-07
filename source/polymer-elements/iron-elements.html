@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html" />
+    </head>
+    <body unresolved>
+        
+        <demo-element></demo-element>
+
+        <dom-module id='demo-element'>
+            <template>
+                {{message.text}}
+                <iron-ajax
+                    auto 
+                    url="http://echo.jsontest.com/text/hi_there"
+                    handle-as="json"
+                    on-response="handleResponse"
+                    last-response="{{message}}"
+                ></iron-ajax>
+            </template>
+        </dom-module>
+
+        <script>
+            HTMLImports.whenReady(function(){
+                Polymer({
+                    is: 'demo-element',
+                    properties:{
+                        message:{
+                            type: Object
+                        }
+                    },
+                    handleResponse: function(e, request){
+                        console.log(e.detail.response);
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>
